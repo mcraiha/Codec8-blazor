@@ -3,8 +3,9 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Codec8-blazor, decode Codec8 and Codec8 Extended</title>
+    <title>Codec8 with Blazor - Decode Codec8 and Codec8 Extended messages</title>
     <base href="/" />
+    <link href="css/app.css" rel="stylesheet" />
     <link href="css/mvp.css" rel="stylesheet" />
     
     <!-- If you add any scoped CSS files, uncomment the following to load them
@@ -12,13 +13,39 @@
 </head>
 
 <body>
-    <div id="app">Loading...</div>
+    <header>
+        <h2>Codec8 with Blazor</h2>
+    </header>
+    <main>
+        <noscript><strong>Codec8 with Blazor requires Javascript + WASM compatible browser</strong></noscript>
+        <div>
+            <details>
+                <summary>
+                    What is this?
+                </summary>
+                <p><b>Codec8 with Blazor</b> is a browser based tool for decoding Codec8 and Codec8 Extended messages</p>
+            </details>
+        </div>
+        <div id="app">Loading...</div>
+
+        
+    </main>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
+
+    <footer>
+        <hr>
+        <p>
+            <small>
+                Codec8 with Blazor - <time datetime="{0}">{0}</time> <a href="https://github.com/mcraiha/x/commit/{1}">#{1}</a>- <a href="about.html">About</a>
+            </small>
+        </p>
+    </footer>
+
     <script src="_framework/blazor.webassembly.js"></script>
 </body>
 

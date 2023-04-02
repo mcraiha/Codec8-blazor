@@ -1,3 +1,71 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+<PageTitle>Codec8 with Blazor</PageTitle>
+<p>Please write or paste the input to text area below</p>
+<textarea @bind="Description" @bind:event="oninput" />
+
+<p>Mandatory parts</p>
+<table>
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Hex
+            </th>
+            <th>
+                Value
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                Zero bytes
+            </td>
+            <td>
+                <code>00 00 00 00</code>
+            </td>
+            <td>
+                0
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<p>Packet 01</p>
+<table>
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Hex
+            </th>
+            <th>
+                Value
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                Timestamp
+            </td>
+            <td>
+                <code>00 00 00 00</code>
+            </td>
+            <td>
+                0
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+@code {
+public string Description { get; set; } = string.Empty;
+
+}
