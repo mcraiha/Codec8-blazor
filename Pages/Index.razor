@@ -1,38 +1,129 @@
 ﻿@page "/"
 
 <PageTitle>Codec8 with Blazor</PageTitle>
-<p>Please write or paste the input to text area below</p>
-<textarea @bind="Description" @bind:event="oninput" />
+<p>Please write or paste the Codec8 or Codec8 Extended to text area below</p>
+<textarea @bind="Codec8Hex" @bind:event="oninput" />
 
 <p>Mandatory parts</p>
-<table>
-    <thead>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Hex
-            </th>
-            <th>
-                Value
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                Zero bytes
-            </td>
-            <td>
-                <code>00 00 00 00</code>
-            </td>
-            <td>
-                0
-            </td>
-        </tr>
-    </tbody>
-</table>
+@if (frame != null)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Hex
+                </th>
+                <th>
+                    Value
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    Zero bytes
+                </td>
+                <td>
+                    <code>00 00 00 00</code>
+                </td>
+                <td>
+                    0
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Data Field Length
+                </td>
+                <td>
+                    <code>@GetByteArrayAsSplittedHex(@frame.dataFieldLengthBytes)</code>
+                </td>
+                <td>
+                    @BytesToNumbers.GetUInt32(@frame.dataFieldLengthBytes)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Codec ID
+                </td>
+                <td>
+                    <code>08</code>
+                </td>
+                <td>
+                    8
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Number of Data 1 (Records)
+                </td>
+                <td>
+                    <code>@frame.numberOfData1.ToString("X2")</code>
+                </td>
+                <td>
+                    @frame.numberOfData1
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Number of Data 2 (Records)
+                </td>
+                <td>
+                    <code>@frame.numberOfData2.ToString("X2")</code>
+                </td>
+                <td>
+                    @frame.numberOfData2
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    CRC-16
+                </td>
+                <td>
+                    <code>@GetByteArrayAsSplittedHex(@frame.crc16)</code>
+                </td>
+                <td>
+                    @BytesToNumbers.GetUInt32(@frame.crc16)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    @foreach (AvlDataCodec8 avlData in frame.GetAvlDatas())
+    {
+        <p>Packet 01</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Hex
+                    </th>
+                    <th>
+                        Value
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        Timestamp
+                    </td>
+                    <td>
+                        <code>@GetByteArrayAsSplittedHex(@avlData.timestampBytes)</code>
+                    </td>
+                    <td>
+                        @avlData.GetTimestamp().ToString("o")
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    }
+}
 
 
 <p>Packet 01</p>
@@ -66,6 +157,48 @@
 </table>
 
 @code {
-public string Description { get; set; } = string.Empty;
+    private string contentActual = "";
+    public string Codec8Hex 
+    {
+        get => contentActual;
+        set
+        {
+            somethingDecoded = true;
+            contentActual = value;
+            if (!string.IsNullOrEmpty(value))
+            {
+                (GenericDecodeResult result, object valueOrError) = GenericDecoder.ParseHexadecimalString(value);
 
+                if (result == GenericDecodeResult.SuccessCodec8)
+                {
+                    frame = (Codec8Frame)valueOrError;
+                    frameExtended = null;
+                    possibleError = "";
+                }
+                else if (result == GenericDecodeResult.SuccessCodec8Extended)
+                {
+                    frame = null;
+                    frameExtended = (Codec8ExtendedFrame)valueOrError;
+                    possibleError = "";
+                }
+                else
+                {
+                    frame = null;
+                    frameExtended = null;
+                    possibleError = (string)valueOrError;
+                }
+            }
+        } 
+    }
+
+    private bool somethingDecoded = false;
+    private GenericDecodeResult result = GenericDecodeResult.InputNullOrEmpty;
+    private Codec8Frame? frame = null;
+    private Codec8ExtendedFrame? frameExtended = null;
+    private string possibleError = "";
+
+    private static string GetByteArrayAsSplittedHex(byte[] bytes)
+    {
+        return String.Join(" ", Array.ConvertAll(bytes, x => x.ToString("X2")));
+    }
 }
