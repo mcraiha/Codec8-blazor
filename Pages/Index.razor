@@ -4,96 +4,16 @@
 <p>Please write or paste the Codec8 or Codec8 Extended to text area below</p>
 <textarea @bind="Codec8Hex" @bind:event="oninput" />
 
-<p>Mandatory parts</p>
-@if (frame != null)
+@if (!string.IsNullOrEmpty(possibleError))
 {
-    <table>
-        <thead>
-            <tr>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Hex
-                </th>
-                <th>
-                    Value
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    Zero bytes
-                </td>
-                <td>
-                    <code>00 00 00 00</code>
-                </td>
-                <td>
-                    0
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Data Field Length
-                </td>
-                <td>
-                    <code>@GetByteArrayAsSplittedHex(@frame.dataFieldLengthBytes)</code>
-                </td>
-                <td>
-                    @BytesToNumbers.GetUInt32(@frame.dataFieldLengthBytes)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Codec ID
-                </td>
-                <td>
-                    <code>08</code>
-                </td>
-                <td>
-                    8
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Number of Data 1 (Records)
-                </td>
-                <td>
-                    <code>@frame.numberOfData1.ToString("X2")</code>
-                </td>
-                <td>
-                    @frame.numberOfData1
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Number of Data 2 (Records)
-                </td>
-                <td>
-                    <code>@frame.numberOfData2.ToString("X2")</code>
-                </td>
-                <td>
-                    @frame.numberOfData2
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    CRC-16
-                </td>
-                <td>
-                    <code>@GetByteArrayAsSplittedHex(@frame.crc16)</code>
-                </td>
-                <td>
-                    @BytesToNumbers.GetUInt32(@frame.crc16)
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    @foreach (AvlDataCodec8 avlData in frame.GetAvlDatas())
+    <p>Following error occurred:</p>
+    <code>@possibleError</code>
+}
+else
+{
+    <p>Mandatory parts</p>
+    @if (frame != null)
     {
-        <p>Packet 01</p>
         <table>
             <thead>
                 <tr>
@@ -111,50 +31,250 @@
             <tbody>
                 <tr>
                     <td>
-                        Timestamp
+                        Zero bytes
                     </td>
                     <td>
-                        <code>@GetByteArrayAsSplittedHex(@avlData.timestampBytes)</code>
+                        <code>00 00 00 00</code>
                     </td>
                     <td>
-                        @avlData.GetTimestamp().ToString("o")
+                        0
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Data Field Length
+                    </td>
+                    <td>
+                        <code>@GetByteArrayAsSplittedHex(@frame.dataFieldLengthBytes)</code>
+                    </td>
+                    <td>
+                        @BytesToNumbers.GetUInt32(@frame.dataFieldLengthBytes)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Codec ID
+                    </td>
+                    <td>
+                        <code>08</code>
+                    </td>
+                    <td>
+                        8
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Number of Data 1 (Records)
+                    </td>
+                    <td>
+                        <code>@frame.numberOfData1.ToString("X2")</code>
+                    </td>
+                    <td>
+                        @frame.numberOfData1
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Number of Data 2 (Records)
+                    </td>
+                    <td>
+                        <code>@frame.numberOfData2.ToString("X2")</code>
+                    </td>
+                    <td>
+                        @frame.numberOfData2
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        CRC-16
+                    </td>
+                    <td>
+                        <code>@GetByteArrayAsSplittedHex(@frame.crc16)</code>
+                    </td>
+                    <td>
+                        @BytesToNumbers.GetUInt32(@frame.crc16)
                     </td>
                 </tr>
             </tbody>
         </table>
+        {
+            int recordNumber = 1;
+            @foreach (AvlDataCodec8 avlData in frame.GetAvlDatas())
+            {
+                GPSElement gps = avlData.GetGPSElement();
+                IOElementCodec8 ioElement = avlData.GetIOElement();
+                <p>AVL Data Record @recordNumber</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Hex
+                            </th>
+                            <th>
+                                Value
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Timestamp
+                            </td>
+                            <td>
+                                <code>@GetByteArrayAsSplittedHex(@avlData.timestampBytes)</code>
+                            </td>
+                            <td>
+                                @avlData.GetTimestamp().ToString("o")
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Priority
+                            </td>
+                            <td>
+                                <code>@avlData.priority.ToString("X2")</code>
+                            </td>
+                            <td>
+                                @avlData.priority
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Longitude
+                            </td>
+                            <td>
+                                <code>@GetByteArrayAsSplittedHex(gps.longitudeBytes)</code>
+                            </td>
+                            <td>
+                                @gps.GetLongitude()
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Latitude
+                            </td>
+                            <td>
+                                <code>@GetByteArrayAsSplittedHex(gps.latitudeBytes)</code>
+                            </td>
+                            <td>
+                                @gps.GetLatitude()
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Altitude
+                            </td>
+                            <td>
+                                <code>@GetByteArrayAsSplittedHex(gps.altitudeBytes)</code>
+                            </td>
+                            <td>
+                                @gps.GetAltitude()
+                            </td>
+                        </tr>
+                         <tr>
+                            <td>
+                                Angle
+                            </td>
+                            <td>
+                                <code>@GetByteArrayAsSplittedHex(gps.angleBytes)</code>
+                            </td>
+                            <td>
+                                @gps.GetAngle()
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Satellites
+                            </td>
+                            <td>
+                                <code>@gps.visibleSatellites.ToString("X2")</code>
+                            </td>
+                            <td>
+                                @gps.visibleSatellites
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Speed
+                            </td>
+                            <td>
+                                <code>@GetByteArrayAsSplittedHex(gps.speedBytes)</code>
+                            </td>
+                            <td>
+                                @gps.GetSpeed()
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Event IO ID
+                            </td>
+                            <td>
+                                <code>@ioElement.eventIoId.ToString("X2")</code>
+                            </td>
+                            <td>
+                                @ioElement.eventIoId
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Total number of IO
+                            </td>
+                            <td>
+                                <code>@ioElement.totalCount.ToString("X2")</code>
+                            </td>
+                            <td>
+                                @ioElement.totalCount
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Number of One Byte IO
+                            </td>
+                            <td>
+                                <code>@ioElement.oneByteValuesCount.ToString("X2")</code>
+                            </td>
+                            <td>
+                                @ioElement.oneByteValuesCount
+                            </td>
+                        </tr>
+                        @foreach ((byte Id, byte Value) in ioElement.oneByteIdValuePairs)
+                        {
+                            int ioCount = 1;
+                        <tr>
+                            <td>
+                                @ioCount IO ID
+                            </td>
+                            <td>
+                                <code>@Id.ToString("X2")</code>
+                            </td>
+                            <td>
+                                @Id
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @ioCount IO Value
+                            </td>
+                            <td>
+                                <code>@Value.ToString("X2")</code>
+                            </td>
+                            <td>
+                                @Value
+                            </td>
+                        </tr>
+                        ioCount++;
+                        }
+                    </tbody>
+                </table>
+
+                recordNumber++;
+            }
+        }
     }
 }
-
-
-<p>Packet 01</p>
-<table>
-    <thead>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Hex
-            </th>
-            <th>
-                Value
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                Timestamp
-            </td>
-            <td>
-                <code>00 00 00 00</code>
-            </td>
-            <td>
-                0
-            </td>
-        </tr>
-    </tbody>
-</table>
 
 @code {
     private string contentActual = "";
