@@ -1,0 +1,35 @@
+# Publish to CloudFlare
+
+name: .NET publish
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Add build info
+      run: |
+        current_date=$(date --iso-8601=minutes)
+        git_short_hash=$(git rev-parse --short HEAD)
+        echo $current_date
+        echo $git_short_hash
+        sed -i "s/{0}/$current_date/g" wwwroot/index.html
+        sed -i "s/{1}/$git_short_hash/g" wwwroot/index.html
+    - name: Publish release
+      run: dotnet publish -c Release
+    - name: Upload to pages
+      uses: cloudflare/wrangler-action@2.0.0
+      with:
+        apiToken: ${{ secrets.CF_API_TOKEN }}
+        accountId: ${{ secrets.CF_ACCOUNT_ID }}
+        command: pages publish bin/Release/net7.0/publish/wwwroot --project-name=codec8-blazor
