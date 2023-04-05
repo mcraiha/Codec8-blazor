@@ -1,0 +1,37 @@
+@namespace MyShared
+
+@if (FourByteIdValuePairs.Count > 0) 
+{
+    int ioCount = 1;
+    @foreach ((byte Id, byte[] Value) in FourByteIdValuePairs)
+    { 
+        <tr>
+            <td>
+                ↳ @ioCount IO ID
+            </td>
+            <td>
+                <code>@Id.ToString("X2")</code>
+            </td>
+            <td>
+                @Id
+            </td>
+        </tr>
+        <tr>
+            <td>
+                ↳ @ioCount IO Value
+            </td>
+            <td>
+                <code>@Common.GetByteArrayAsSplittedHex(Value)</code>
+            </td>
+            <td>
+                @BytesToNumbers.GetUInt32(Value) / @BytesToNumbers.GetInt32(Value)
+            </td>
+        </tr>
+        ioCount++;
+    }
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public List<(byte Id, byte[] Value)> FourByteIdValuePairs { get; set; }
+}

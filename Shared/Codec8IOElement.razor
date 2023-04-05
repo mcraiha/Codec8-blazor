@@ -33,33 +33,46 @@
         @IOElement.oneByteValuesCount
     </td>
 </tr>
-@foreach ((byte Id, byte Value) in IOElement.oneByteIdValuePairs)
-{
-    int ioCount = 1;
-    <tr>
-        <td>
-            @ioCount IO ID
-        </td>
-        <td>
-            <code>@Id.ToString("X2")</code>
-        </td>
-        <td>
-            @Id
-        </td>
-    </tr>
-    <tr>
-        <td>
-            @ioCount IO Value
-        </td>
-        <td>
-            <code>@Value.ToString("X2")</code>
-        </td>
-        <td>
-            @Value
-        </td>
-    </tr>
-    ioCount++;
-}
+<Codec8OneByteIdValuePairs OneByteIdValuePairs="@IOElement.oneByteIdValuePairs" />
+
+<tr>
+    <td>
+        Number of Two Byte IO
+    </td>
+    <td>
+        <code>@IOElement.twoByteValuesCount.ToString("X2")</code>
+    </td>
+    <td>
+        @IOElement.twoByteValuesCount
+    </td>
+</tr>
+<Codec8TwoByteIdValuePairs TwoByteIdValuePairs="@IOElement.twoByteIdValuePairs" />
+
+<tr>
+    <td>
+        Number of Four Byte IO
+    </td>
+    <td>
+        <code>@IOElement.fourByteValuesCount.ToString("X2")</code>
+    </td>
+    <td>
+        @IOElement.fourByteValuesCount
+    </td>
+</tr>
+<Codec8FourByteIdValuePairs FourByteIdValuePairs="@IOElement.fourByteIdValuePairs" />
+
+<tr>
+    <td>
+        Number of Eight Byte IO
+    </td>
+    <td>
+        <code>@IOElement.eightByteValuesCount.ToString("X2")</code>
+    </td>
+    <td>
+        @IOElement.eightByteValuesCount
+    </td>
+</tr>
+<Codec8EightByteIdValuePairs EightByteIdValuePairs="@IOElement.eightByteIdValuePairs" />
 
 @code {
     [Parameter, EditorRequired]
