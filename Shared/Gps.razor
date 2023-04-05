@@ -1,0 +1,73 @@
+@namespace MyShared
+
+<tr>
+    <td>
+        Longitude
+    </td>
+    <td>
+        <code>@Common.GetByteArrayAsSplittedHex(GPS.longitudeBytes)</code>
+    </td>
+    <td>
+        @GPS.GetLongitude()
+    </td>
+</tr>
+<tr>
+    <td>
+        Latitude
+    </td>
+    <td>
+        <code>@Common.GetByteArrayAsSplittedHex(GPS.latitudeBytes)</code>
+    </td>
+    <td>
+        @GPS.GetLatitude()
+    </td>
+</tr>
+<tr>
+    <td>
+        Altitude
+    </td>
+    <td>
+        <code>@Common.GetByteArrayAsSplittedHex(GPS.altitudeBytes)</code>
+    </td>
+    <td>
+        @GPS.GetAltitude()
+    </td>
+</tr>
+    <tr>
+    <td>
+        Angle
+    </td>
+    <td>
+        <code>@Common.GetByteArrayAsSplittedHex(GPS.angleBytes)</code>
+    </td>
+    <td>
+        @GPS.GetAngle()
+    </td>
+</tr>
+<tr>
+    <td>
+        Satellites
+    </td>
+    <td>
+        <code>@GPS.visibleSatellites.ToString("X2")</code>
+    </td>
+    <td>
+        @GPS.visibleSatellites
+    </td>
+</tr>
+<tr>
+    <td>
+        Speed
+    </td>
+    <td>
+        <code>@Common.GetByteArrayAsSplittedHex(GPS.speedBytes)</code>
+    </td>
+    <td>
+        @GPS.GetSpeed()
+    </td>
+</tr>
+
+@code {
+    [Parameter, EditorRequired]
+    public GPSElement GPS { get; set; }
+}

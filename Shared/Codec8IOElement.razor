@@ -1,0 +1,67 @@
+@namespace MyShared
+
+<tr>
+    <td>
+        Event IO ID
+    </td>
+    <td>
+        <code>@IOElement.eventIoId.ToString("X2")</code>
+    </td>
+    <td>
+        @IOElement.eventIoId
+    </td>
+</tr>
+<tr>
+    <td>
+        Total number of IO
+    </td>
+    <td>
+        <code>@IOElement.totalCount.ToString("X2")</code>
+    </td>
+    <td>
+        @IOElement.totalCount
+    </td>
+</tr>
+<tr>
+    <td>
+        Number of One Byte IO
+    </td>
+    <td>
+        <code>@IOElement.oneByteValuesCount.ToString("X2")</code>
+    </td>
+    <td>
+        @IOElement.oneByteValuesCount
+    </td>
+</tr>
+@foreach ((byte Id, byte Value) in IOElement.oneByteIdValuePairs)
+{
+    int ioCount = 1;
+    <tr>
+        <td>
+            @ioCount IO ID
+        </td>
+        <td>
+            <code>@Id.ToString("X2")</code>
+        </td>
+        <td>
+            @Id
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @ioCount IO Value
+        </td>
+        <td>
+            <code>@Value.ToString("X2")</code>
+        </td>
+        <td>
+            @Value
+        </td>
+    </tr>
+    ioCount++;
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public IOElementCodec8 IOElement { get; set; }
+}

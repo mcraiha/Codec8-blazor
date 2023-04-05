@@ -1,0 +1,90 @@
+@namespace MyShared
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Hex
+            </th>
+            <th>
+                Value
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                Zero bytes
+            </td>
+            <td>
+                <code>00 00 00 00</code>
+            </td>
+            <td>
+                0
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Data Field Length
+            </td>
+            <td>
+                <code>@Common.GetByteArrayAsSplittedHex(@Frame.dataFieldLengthBytes)</code>
+            </td>
+            <td>
+                @BytesToNumbers.GetUInt32(@Frame.dataFieldLengthBytes)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Codec ID
+            </td>
+            <td>
+                <code>08</code>
+            </td>
+            <td>
+                8
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Number of Data 1 (Records)
+            </td>
+            <td>
+                <code>@Frame.numberOfData1.ToString("X2")</code>
+            </td>
+            <td>
+                @Frame.numberOfData1
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Number of Data 2 (Records)
+            </td>
+            <td>
+                <code>@Frame.numberOfData2.ToString("X2")</code>
+            </td>
+            <td>
+                @Frame.numberOfData2
+            </td>
+        </tr>
+        <tr>
+            <td>
+                CRC-16
+            </td>
+            <td>
+                <code>@Common.GetByteArrayAsSplittedHex(@Frame.crc16)</code>
+            </td>
+            <td>
+                @BytesToNumbers.GetUInt32(@Frame.crc16)
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+@code {
+    [Parameter, EditorRequired]
+    public Codec8Frame Frame { get; set; }
+}
