@@ -4,7 +4,7 @@ Decode Codec8 and Codec8 Extended messages in browser
 
 ## Web link
 
-TBA
+[codec8.raiha.rocks](https://codec8.raiha.rocks/)
 
 ## Requirements (end user)
 
