@@ -1,6 +1,6 @@
 # Codec8-blazor
 
-Decode Codec8 and Codec8 Extended messages in browser
+Decode [Codec8](https://wiki.teltonika-gps.com/view/Codec#Codec_8) and [Codec8 Extended](https://wiki.teltonika-gps.com/view/Codec#Codec_8_Extended) messages in browser
 
 ## Web link
 
