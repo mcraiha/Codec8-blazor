@@ -25,6 +25,17 @@ dotnet run
   
 And then you can open http://localhost:5274 in your browser
 
+## How to publish
+
+### Actual publish
+
+Run
+```
+dotnet publish -c Release
+```
+  
+and content should be in **bin\Release\net7.0\publish\wwwroot** folder.
+
 ## Licenses
 
 All code files (*.cs, *.razor) and HTML files (*.html) are under [PUBLIC DOMAIN](https://opensource.org/licenses/MIT) license
