@@ -4,10 +4,11 @@
 {
     int ioCount = 1;
     @foreach ((byte Id, byte[] Value) in TwoByteIdValuePairs)
-    { 
+    {
+        string ordinalNumber = Common.TurnToOrdinal(ioCount);
         <tr>
             <td>
-                ↳ @ioCount IO ID
+                ↳ @ordinalNumber IO ID
             </td>
             <td>
                 <code>@Id.ToString("X2")</code>
@@ -18,7 +19,7 @@
         </tr>
         <tr>
             <td>
-                ↳ @ioCount IO Value
+                ↳ @ordinalNumber IO Value
             </td>
             <td>
                 <code>@Common.GetByteArrayAsSplittedHex(Value)</code>
