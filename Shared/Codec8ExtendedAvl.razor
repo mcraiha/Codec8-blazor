@@ -1,0 +1,58 @@
+@namespace MyShared
+
+<p>AVL Data Record @RecordNumber</p>
+<table>
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Hex
+            </th>
+            <th>
+                Value
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                Timestamp
+            </td>
+            <td>
+                <code>@Common.GetByteArrayAsSplittedHex(@AVLData.timestampBytes)</code>
+            </td>
+            <td>
+                @AVLData.GetTimestamp().ToString("o")
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Priority
+            </td>
+            <td>
+                <code>@AVLData.priority.ToString("X2")</code>
+            </td>
+            <td>
+                @AVLData.priority
+            </td>
+        </tr>
+        <Gps GPS="@GPS" />
+        <Codec8ExtendedIOElement IOElement="@IOElement" />
+    </tbody>
+</table>
+
+@code {
+    [Parameter, EditorRequired]
+    public AvlDataCodec8Extended AVLData { get; set; }
+
+    [Parameter, EditorRequired]
+    public GPSElement GPS { get; set; }
+
+    [Parameter, EditorRequired]
+    public IOElementCodec8Extended IOElement { get; set; }
+
+    [Parameter, EditorRequired]
+    public int RecordNumber { get; set; }
+}

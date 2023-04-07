@@ -27,6 +27,21 @@ else
             }
         }
     }
+    else if (frameExtended != null)
+    {
+        <Codec8ExtendedMandatory Frame="@frameExtended" />
+        {
+            int recordNumber = 1;
+            @foreach (AvlDataCodec8Extended avlData in frameExtended.GetAvlDatas())
+            {
+                GPSElement gps = avlData.GetGPSElement();
+                IOElementCodec8Extended ioElement = avlData.GetIOElement();
+                
+                <Codec8ExtendedAvl AVLData="@avlData" GPS="@gps" IOElement="@ioElement" RecordNumber="@recordNumber" />
+                recordNumber++;
+            }
+        }
+    }
 }
 
 @code {

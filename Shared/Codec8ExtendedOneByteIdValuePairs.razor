@@ -1,0 +1,38 @@
+@namespace MyShared
+
+@if (OneByteIdValuePairs.Count > 0) 
+{
+    int ioCount = 1;
+    @foreach ((byte[] Id, byte Value) in OneByteIdValuePairs)
+    {
+        string ordinalNumber = Common.TurnToOrdinal(ioCount);
+        <tr>
+            <td>
+                ↳ @ordinalNumber IO ID
+            </td>
+            <td>
+                <code>@Common.GetByteArrayAsSplittedHex(Id)</code>
+            </td>
+            <td>
+                @BytesToNumbers.GetUInt16(Id)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                ↳ @ordinalNumber IO Value
+            </td>
+            <td>
+                <code>@Value.ToString("X2")</code>
+            </td>
+            <td>
+                @Value
+            </td>
+        </tr>
+        ioCount++;
+    }
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public List<(byte[] Id, byte Value)> OneByteIdValuePairs { get; set; }
+}

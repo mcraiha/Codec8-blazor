@@ -1,0 +1,80 @@
+@namespace MyShared
+
+<tr>
+    <td>
+        Event IO ID
+    </td>
+    <td>
+        <code>@Common.GetByteArrayAsSplittedHex(IOElement.eventIoId)</code>
+    </td>
+    <td>
+        @BytesToNumbers.GetUInt16(IOElement.eventIoId)
+    </td>
+</tr>
+<tr>
+    <td>
+        Total number of IO
+    </td>
+    <td>
+        <code>@Common.GetByteArrayAsSplittedHex(IOElement.totalCount)</code>
+    </td>
+    <td>
+        @BytesToNumbers.GetUInt16(IOElement.totalCount)
+    </td>
+</tr>
+<tr>
+    <td>
+        Number of One Byte IO
+    </td>
+    <td>
+        <code>@Common.GetByteArrayAsSplittedHex(IOElement.oneByteValuesCountBytes)</code>
+    </td>
+    <td>
+        @BytesToNumbers.GetUInt16(IOElement.oneByteValuesCountBytes)
+    </td>
+</tr>
+<Codec8ExtendedOneByteIdValuePairs OneByteIdValuePairs="@IOElement.oneByteIdValuePairs" />
+
+<tr>
+    <td>
+        Number of Two Byte IO
+    </td>
+    <td>
+        <code>@Common.GetByteArrayAsSplittedHex(IOElement.twoByteValuesCountBytes)</code>
+    </td>
+    <td>
+        @BytesToNumbers.GetUInt16(IOElement.twoByteValuesCountBytes)
+    </td>
+</tr>
+<Codec8ExtendedTwoByteIdValuePairs TwoByteIdValuePairs="@IOElement.twoByteIdValuePairs" />
+
+<tr>
+    <td>
+        Number of Four Byte IO
+    </td>
+    <td>
+        <code>@Common.GetByteArrayAsSplittedHex(IOElement.fourByteValuesCountBytes)</code>
+    </td>
+    <td>
+        @BytesToNumbers.GetUInt16(IOElement.fourByteValuesCountBytes)
+    </td>
+</tr>
+<Codec8ExtendedFourByteIdValuePairs FourByteIdValuePairs="@IOElement.fourByteIdValuePairs" />
+
+<tr>
+    <td>
+        Number of Eight Byte IO
+    </td>
+    <td>
+        <code>@Common.GetByteArrayAsSplittedHex(IOElement.eightByteValuesCountBytes)</code>
+    </td>
+    <td>
+        @BytesToNumbers.GetUInt16(IOElement.eightByteValuesCountBytes)
+    </td>
+</tr>
+<Codec8ExtendedEightByteIdValuePairs EightByteIdValuePairs="@IOElement.eightByteIdValuePairs" />
+
+@code {
+    [Parameter, EditorRequired]
+    public IOElementCodec8Extended IOElement { get; set; }
+}
