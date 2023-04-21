@@ -1,8 +1,8 @@
 ﻿@page "/"
 
 <PageTitle>Codec8 with Blazor</PageTitle>
-<p>Please write or paste the Codec8 or Codec8 Extended to text area below</p>
-<textarea @bind="Codec8Hex" @bind:event="oninput" />
+<label for="userinput">Please write or paste the Codec8 or Codec8 Extended to text area below</label>
+<textarea @bind="Codec8Hex" @bind:event="oninput" id="userinput" name="userinput" />
 
 @if (!string.IsNullOrEmpty(possibleError))
 {
