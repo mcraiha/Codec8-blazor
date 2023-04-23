@@ -14,6 +14,7 @@ else
     <p>Mandatory parts</p>
     @if (frame != null)
     {
+        <p><a href="@currentInputAsURL" target="_blank">Share (🔗)</a></p>
         <Codec8Mandatory Frame="@frame" />
         {
             int recordNumber = 1;
@@ -29,6 +30,7 @@ else
     }
     else if (frameExtended != null)
     {
+        <p><a href="@currentInputAsURL" target="_blank">Share (🔗)</a></p>
         <Codec8ExtendedMandatory Frame="@frameExtended" />
         {
             int recordNumber = 1;
@@ -62,18 +64,21 @@ else
                     frame = (Codec8Frame)valueOrError;
                     frameExtended = null;
                     possibleError = "";
+                    currentInputAsURL = $"https://codec8.raiha.rocks/?Input={contentActual}";
                 }
                 else if (result == GenericDecodeResult.SuccessCodec8Extended)
                 {
                     frame = null;
                     frameExtended = (Codec8ExtendedFrame)valueOrError;
                     possibleError = "";
+                    currentInputAsURL = $"https://codec8.raiha.rocks/?Input={contentActual}";
                 }
                 else
                 {
                     frame = null;
                     frameExtended = null;
                     possibleError = (string)valueOrError;
+                    currentInputAsURL = "";
                 }
             }
         } 
@@ -84,6 +89,8 @@ else
     private Codec8Frame? frame = null;
     private Codec8ExtendedFrame? frameExtended = null;
     private string possibleError = "";
+
+    private string currentInputAsURL = "";
 
     [Parameter]
     [SupplyParameterFromQuery]
