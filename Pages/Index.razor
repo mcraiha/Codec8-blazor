@@ -84,4 +84,18 @@ else
     private Codec8Frame? frame = null;
     private Codec8ExtendedFrame? frameExtended = null;
     private string possibleError = "";
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? Input 
+    { 
+        get => ""; 
+        set
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                Codec8Hex = value;
+            }
+        }
+    }
 }
