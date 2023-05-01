@@ -2,7 +2,7 @@
 
 <tr>
     <td>
-        Longitude
+        Longitude (<a href="@GetBingMapsUrl()" target="_blank">Bing Maps</a>)
     </td>
     <td>
         <code>@Common.GetByteArrayAsSplittedHex(GPS.longitudeBytes)</code>
@@ -13,7 +13,7 @@
 </tr>
 <tr>
     <td>
-        Latitude
+        Latitude (<a href="@GetGoogleMapsUrl()" target="_blank">Google Maps</a>)
     </td>
     <td>
         <code>@Common.GetByteArrayAsSplittedHex(GPS.latitudeBytes)</code>
@@ -70,4 +70,14 @@
 @code {
     [Parameter, EditorRequired]
     public GPSElement GPS { get; set; }
+
+    public string GetGoogleMapsUrl()
+    {
+        return $"https://www.google.com/maps/@{GPS.GetLatitudeAngle().ToString(CultureInfo.InvariantCulture)},{GPS.GetLongitudeAngle().ToString(CultureInfo.InvariantCulture)},14z";
+    }
+
+    public string GetBingMapsUrl()
+    {
+        return $"https://www.bing.com/maps?cp={GPS.GetLatitudeAngle().ToString(CultureInfo.InvariantCulture)}~{GPS.GetLongitudeAngle().ToString(CultureInfo.InvariantCulture)}";
+    }
 }
