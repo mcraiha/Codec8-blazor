@@ -5,7 +5,7 @@
         Event IO ID
     </td>
     <td>
-        <code>@Common.GetByteArrayAsSplittedHex(IOElement.eventIoId)</code>
+        <code>@Common.GetByteArrayAsSplittedHex(IOElement.eventIoId, DashHexes)</code>
     </td>
     <td>
         @BytesToNumbers.GetUInt16(IOElement.eventIoId)
@@ -16,7 +16,7 @@
         Total number of IO
     </td>
     <td>
-        <code>@Common.GetByteArrayAsSplittedHex(IOElement.totalCount)</code>
+        <code>@Common.GetByteArrayAsSplittedHex(IOElement.totalCount, DashHexes)</code>
     </td>
     <td>
         @BytesToNumbers.GetUInt16(IOElement.totalCount)
@@ -27,54 +27,57 @@
         Number of One Byte IO
     </td>
     <td>
-        <code>@Common.GetByteArrayAsSplittedHex(IOElement.oneByteValuesCountBytes)</code>
+        <code>@Common.GetByteArrayAsSplittedHex(IOElement.oneByteValuesCountBytes, DashHexes)</code>
     </td>
     <td>
         @BytesToNumbers.GetUInt16(IOElement.oneByteValuesCountBytes)
     </td>
 </tr>
-<Codec8ExtendedOneByteIdValuePairs OneByteIdValuePairs="@IOElement.oneByteIdValuePairs" />
+<Codec8ExtendedOneByteIdValuePairs OneByteIdValuePairs="@IOElement.oneByteIdValuePairs" DashHexes="@DashHexes" />
 
 <tr>
     <td>
         Number of Two Byte IO
     </td>
     <td>
-        <code>@Common.GetByteArrayAsSplittedHex(IOElement.twoByteValuesCountBytes)</code>
+        <code>@Common.GetByteArrayAsSplittedHex(IOElement.twoByteValuesCountBytes, DashHexes)</code>
     </td>
     <td>
         @BytesToNumbers.GetUInt16(IOElement.twoByteValuesCountBytes)
     </td>
 </tr>
-<Codec8ExtendedTwoByteIdValuePairs TwoByteIdValuePairs="@IOElement.twoByteIdValuePairs" />
+<Codec8ExtendedTwoByteIdValuePairs TwoByteIdValuePairs="@IOElement.twoByteIdValuePairs" DashHexes="@DashHexes" />
 
 <tr>
     <td>
         Number of Four Byte IO
     </td>
     <td>
-        <code>@Common.GetByteArrayAsSplittedHex(IOElement.fourByteValuesCountBytes)</code>
+        <code>@Common.GetByteArrayAsSplittedHex(IOElement.fourByteValuesCountBytes, DashHexes)</code>
     </td>
     <td>
         @BytesToNumbers.GetUInt16(IOElement.fourByteValuesCountBytes)
     </td>
 </tr>
-<Codec8ExtendedFourByteIdValuePairs FourByteIdValuePairs="@IOElement.fourByteIdValuePairs" />
+<Codec8ExtendedFourByteIdValuePairs FourByteIdValuePairs="@IOElement.fourByteIdValuePairs" DashHexes="@DashHexes" />
 
 <tr>
     <td>
         Number of Eight Byte IO
     </td>
     <td>
-        <code>@Common.GetByteArrayAsSplittedHex(IOElement.eightByteValuesCountBytes)</code>
+        <code>@Common.GetByteArrayAsSplittedHex(IOElement.eightByteValuesCountBytes, DashHexes)</code>
     </td>
     <td>
         @BytesToNumbers.GetUInt16(IOElement.eightByteValuesCountBytes)
     </td>
 </tr>
-<Codec8ExtendedEightByteIdValuePairs EightByteIdValuePairs="@IOElement.eightByteIdValuePairs" />
+<Codec8ExtendedEightByteIdValuePairs EightByteIdValuePairs="@IOElement.eightByteIdValuePairs" DashHexes="@DashHexes" />
 
 @code {
     [Parameter, EditorRequired]
     public IOElementCodec8Extended IOElement { get; set; }
+
+    [Parameter, EditorRequired]
+    public bool DashHexes { get; set; }
 }

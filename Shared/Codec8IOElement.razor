@@ -33,7 +33,7 @@
         @IOElement.oneByteValuesCount
     </td>
 </tr>
-<Codec8OneByteIdValuePairs OneByteIdValuePairs="@IOElement.oneByteIdValuePairs" />
+<Codec8OneByteIdValuePairs OneByteIdValuePairs="@IOElement.oneByteIdValuePairs" DashHexes="@DashHexes" />
 
 <tr>
     <td>
@@ -46,7 +46,7 @@
         @IOElement.twoByteValuesCount
     </td>
 </tr>
-<Codec8TwoByteIdValuePairs TwoByteIdValuePairs="@IOElement.twoByteIdValuePairs" />
+<Codec8TwoByteIdValuePairs TwoByteIdValuePairs="@IOElement.twoByteIdValuePairs" DashHexes="@DashHexes" />
 
 <tr>
     <td>
@@ -59,7 +59,7 @@
         @IOElement.fourByteValuesCount
     </td>
 </tr>
-<Codec8FourByteIdValuePairs FourByteIdValuePairs="@IOElement.fourByteIdValuePairs" />
+<Codec8FourByteIdValuePairs FourByteIdValuePairs="@IOElement.fourByteIdValuePairs" DashHexes="@DashHexes" />
 
 <tr>
     <td>
@@ -72,9 +72,12 @@
         @IOElement.eightByteValuesCount
     </td>
 </tr>
-<Codec8EightByteIdValuePairs EightByteIdValuePairs="@IOElement.eightByteIdValuePairs" />
+<Codec8EightByteIdValuePairs EightByteIdValuePairs="@IOElement.eightByteIdValuePairs" DashHexes="@DashHexes" />
 
 @code {
     [Parameter, EditorRequired]
     public IOElementCodec8 IOElement { get; set; }
+
+    [Parameter, EditorRequired]
+    public bool DashHexes { get; set; }
 }

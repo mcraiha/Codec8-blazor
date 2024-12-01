@@ -3,6 +3,8 @@
 <PageTitle>Codec8 with Blazor</PageTitle>
 <label for="userinput">Please write or paste the Codec8 or Codec8 Extended to text area below</label>
 <textarea @bind="Codec8Hex" @bind:event="oninput" id="userinput" name="userinput" />
+<label for="addhexes">Should dashes (-) be added to hex codes</label>
+<input @bind="DashHexes" type="checkbox" id="addhexes" name="addhexes" />
 
 @if (!string.IsNullOrEmpty(possibleError))
 {
@@ -15,7 +17,7 @@ else
     @if (frame != null)
     {
         <p><a href="@currentInputAsURL" target="_blank">Share (🔗)</a></p>
-        <Codec8Mandatory Frame="@frame" />
+        <Codec8Mandatory Frame="@frame" DashHexes="@DashHexes" />
         {
             int recordNumber = 1;
             @foreach (AvlDataCodec8 avlData in frame.GetAvlDatas())
@@ -23,7 +25,7 @@ else
                 GPSElement gps = avlData.GetGPSElement();
                 IOElementCodec8 ioElement = avlData.GetIOElement();
                 
-                <Codec8Avl AVLData="@avlData" GPS="@gps" IOElement="@ioElement" RecordNumber="@recordNumber" />
+                <Codec8Avl AVLData="@avlData" GPS="@gps" IOElement="@ioElement" RecordNumber="@recordNumber" DashHexes="@DashHexes" />
                 recordNumber++;
             }
         }
@@ -31,7 +33,7 @@ else
     else if (frameExtended != null)
     {
         <p><a href="@currentInputAsURL" target="_blank">Share (🔗)</a></p>
-        <Codec8ExtendedMandatory Frame="@frameExtended" />
+        <Codec8ExtendedMandatory Frame="@frameExtended" DashHexes="@DashHexes" />
         {
             int recordNumber = 1;
             @foreach (AvlDataCodec8Extended avlData in frameExtended.GetAvlDatas())
@@ -39,7 +41,7 @@ else
                 GPSElement gps = avlData.GetGPSElement();
                 IOElementCodec8Extended ioElement = avlData.GetIOElement();
                 
-                <Codec8ExtendedAvl AVLData="@avlData" GPS="@gps" IOElement="@ioElement" RecordNumber="@recordNumber" />
+                <Codec8ExtendedAvl AVLData="@avlData" GPS="@gps" IOElement="@ioElement" RecordNumber="@recordNumber" DashHexes="@DashHexes" />
                 recordNumber++;
             }
         }
@@ -83,6 +85,8 @@ else
             }
         } 
     }
+
+    public bool DashHexes { get; set; } = false;
 
     private bool somethingDecoded = false;
     private GenericDecodeResult result = GenericDecodeResult.InputNullOrEmpty;

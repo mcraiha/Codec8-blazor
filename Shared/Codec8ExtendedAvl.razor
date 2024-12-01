@@ -21,7 +21,7 @@
                 Timestamp
             </td>
             <td>
-                <code>@Common.GetByteArrayAsSplittedHex(@AVLData.timestampBytes)</code>
+                <code>@Common.GetByteArrayAsSplittedHex(@AVLData.timestampBytes, DashHexes)</code>
             </td>
             <td>
                 @AVLData.GetTimestamp().ToString("o")
@@ -38,8 +38,8 @@
                 @AVLData.priority
             </td>
         </tr>
-        <Gps GPS="@GPS" />
-        <Codec8ExtendedIOElement IOElement="@IOElement" />
+        <Gps GPS="@GPS" DashHexes="@DashHexes" />
+        <Codec8ExtendedIOElement IOElement="@IOElement" DashHexes="@DashHexes" />
     </tbody>
 </table>
 
@@ -55,4 +55,7 @@
 
     [Parameter, EditorRequired]
     public int RecordNumber { get; set; }
+
+    [Parameter, EditorRequired]
+    public bool DashHexes { get; set; }
 }

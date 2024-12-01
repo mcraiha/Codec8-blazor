@@ -31,7 +31,7 @@
                 Data Field Length
             </td>
             <td>
-                <code>@Common.GetByteArrayAsSplittedHex(@Frame.dataFieldLengthBytes)</code>
+                <code>@Common.GetByteArrayAsSplittedHex(@Frame.dataFieldLengthBytes, DashHexes)</code>
             </td>
             <td>
                 @BytesToNumbers.GetUInt32(@Frame.dataFieldLengthBytes)
@@ -75,7 +75,7 @@
                 CRC-16
             </td>
             <td>
-                <code>@Common.GetByteArrayAsSplittedHex(@Frame.crc16)</code>
+                <code>@Common.GetByteArrayAsSplittedHex(@Frame.crc16, DashHexes)</code>
             </td>
             <td>
                 @BytesToNumbers.GetUInt32(@Frame.crc16)
@@ -87,4 +87,7 @@
 @code {
     [Parameter, EditorRequired]
     public Codec8ExtendedFrame Frame { get; set; }
+
+    [Parameter, EditorRequired]
+    public bool DashHexes { get; set; }
 }

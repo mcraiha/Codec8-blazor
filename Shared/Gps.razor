@@ -5,7 +5,7 @@
         Longitude (<a href="@GetBingMapsUrl()" target="_blank">Bing Maps</a>)
     </td>
     <td>
-        <code>@Common.GetByteArrayAsSplittedHex(GPS.longitudeBytes)</code>
+        <code>@Common.GetByteArrayAsSplittedHex(GPS.longitudeBytes, DashHexes)</code>
     </td>
     <td>
         @GPS.GetLongitudeAngle()
@@ -16,7 +16,7 @@
         Latitude (<a href="@GetGoogleMapsUrl()" target="_blank">Google Maps</a>)
     </td>
     <td>
-        <code>@Common.GetByteArrayAsSplittedHex(GPS.latitudeBytes)</code>
+        <code>@Common.GetByteArrayAsSplittedHex(GPS.latitudeBytes, DashHexes)</code>
     </td>
     <td>
         @GPS.GetLatitudeAngle()
@@ -27,7 +27,7 @@
         Altitude
     </td>
     <td>
-        <code>@Common.GetByteArrayAsSplittedHex(GPS.altitudeBytes)</code>
+        <code>@Common.GetByteArrayAsSplittedHex(GPS.altitudeBytes, DashHexes)</code>
     </td>
     <td>
         @GPS.GetAltitude()
@@ -38,7 +38,7 @@
         Angle
     </td>
     <td>
-        <code>@Common.GetByteArrayAsSplittedHex(GPS.angleBytes)</code>
+        <code>@Common.GetByteArrayAsSplittedHex(GPS.angleBytes, DashHexes)</code>
     </td>
     <td>
         @GPS.GetAngle()
@@ -60,7 +60,7 @@
         Speed
     </td>
     <td>
-        <code>@Common.GetByteArrayAsSplittedHex(GPS.speedBytes)</code>
+        <code>@Common.GetByteArrayAsSplittedHex(GPS.speedBytes, DashHexes)</code>
     </td>
     <td>
         @GPS.GetSpeed()
@@ -70,6 +70,9 @@
 @code {
     [Parameter, EditorRequired]
     public GPSElement GPS { get; set; }
+
+    [Parameter, EditorRequired]
+    public bool DashHexes { get; set; }
 
     public string GetGoogleMapsUrl()
     {

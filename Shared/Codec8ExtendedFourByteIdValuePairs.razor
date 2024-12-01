@@ -11,7 +11,7 @@
                 ↳ @ordinalNumber IO ID
             </td>
             <td>
-                <code>@Common.GetByteArrayAsSplittedHex(Id)</code>
+                <code>@Common.GetByteArrayAsSplittedHex(Id, DashHexes)</code>
             </td>
             <td>
                 @BytesToNumbers.GetUInt16(Id)
@@ -22,7 +22,7 @@
                 ↳ @ordinalNumber IO Value
             </td>
             <td>
-                <code>@Common.GetByteArrayAsSplittedHex(Value)</code>
+                <code>@Common.GetByteArrayAsSplittedHex(Value, DashHexes)</code>
             </td>
             <td>
                 @BytesToNumbers.GetUInt32(Value) / @BytesToNumbers.GetInt32(Value)
@@ -35,4 +35,7 @@
 @code {
     [Parameter, EditorRequired]
     public List<(byte[] Id, byte[] Value)> FourByteIdValuePairs { get; set; }
+
+    [Parameter, EditorRequired]
+    public bool DashHexes { get; set; }
 }

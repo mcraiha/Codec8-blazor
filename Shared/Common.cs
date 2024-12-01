@@ -1,9 +1,9 @@
 
 public static class Common
 {
-    public static string GetByteArrayAsSplittedHex(byte[] bytes)
+    public static string GetByteArrayAsSplittedHex(byte[] bytes, bool splitWIthDashes)
     {
-        return String.Join(" ", Array.ConvertAll(bytes, x => x.ToString("X2")));
+        return String.Join( splitWIthDashes ? "-" :" ", Array.ConvertAll(bytes, x => x.ToString("X2")));
     }
 
     public static string TurnToOrdinal(int number)

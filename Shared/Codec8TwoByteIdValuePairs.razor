@@ -22,7 +22,7 @@
                 ↳ @ordinalNumber IO Value
             </td>
             <td>
-                <code>@Common.GetByteArrayAsSplittedHex(Value)</code>
+                <code>@Common.GetByteArrayAsSplittedHex(Value, DashHexes)</code>
             </td>
             <td>
                 @BytesToNumbers.GetUInt16(Value) / @BytesToNumbers.GetInt16(Value)
@@ -35,4 +35,7 @@
 @code {
     [Parameter, EditorRequired]
     public List<(byte Id, byte[] Value)> TwoByteIdValuePairs { get; set; }
+
+    [Parameter, EditorRequired]
+    public bool DashHexes { get; set; }
 }

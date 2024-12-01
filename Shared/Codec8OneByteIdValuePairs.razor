@@ -35,4 +35,7 @@
 @code {
     [Parameter, EditorRequired]
     public List<(byte Id, byte Value)> OneByteIdValuePairs { get; set; }
+
+    [Parameter, EditorRequired]
+    public bool DashHexes { get; set; }
 }
