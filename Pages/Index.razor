@@ -59,7 +59,7 @@ else
             contentActual = value;
             if (!string.IsNullOrEmpty(value))
             {
-                (GenericDecodeResult result, object valueOrError) = GenericDecoder.ParseHexadecimalString(value);
+                (GenericDecodeResult result, object valueOrError) = GenericDecoder.ParseHexadecimalString(value.Replace("-", string.Empty));
 
                 if (result == GenericDecodeResult.SuccessCodec8)
                 {
