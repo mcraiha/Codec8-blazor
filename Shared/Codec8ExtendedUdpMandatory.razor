@@ -1,0 +1,122 @@
+@namespace MyShared
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Hex
+            </th>
+            <th>
+                Value
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                Packet lenght in bytes
+            </td>
+            <td>
+                <code>@Header.packetLengthInBytes.ToString("X2")</code>
+            </td>
+            <td>
+                @Header.packetLengthInBytes
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Packet Id
+            </td>
+            <td>
+                <code>@Common.GetByteArrayAsSplittedHex(Header.packetId, DashHexes)</code>
+            </td>
+            <td>
+                @Header.GetPacketIdAsUshort()
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Not usable byte
+            </td>
+            <td>
+                <code>@Header.notUsableByte.ToString("X2")</code>
+            </td>
+            <td>
+                @Header.notUsableByte
+            </td>
+        </tr>
+        <tr>
+            <td>
+                AVL packet Id
+            </td>
+            <td>
+                <code>@AvlDataEncapsulated.avlPacketId.ToString("X2")</code>
+            </td>
+            <td>
+                @AvlDataEncapsulated.avlPacketId
+            </td>
+        </tr>
+        <tr>
+            <td>
+                IMEI
+            </td>
+            <td>
+                <code>@Common.GetByteArrayAsSplittedHex(AvlDataEncapsulated.imei, DashHexes)</code>
+            </td>
+            <td>
+                @AvlDataEncapsulated.GetImei()
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Codec ID
+            </td>
+            <td>
+                <code>8E</code>
+            </td>
+            <td>
+                142 (Codec 8 Extended)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Number of Data 1 (Records)
+            </td>
+            <td>
+                <code>@Frame.numberOfData1.ToString("X2")</code>
+            </td>
+            <td>
+                @Frame.numberOfData1
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Number of Data 2 (Records)
+            </td>
+            <td>
+                <code>@Frame.numberOfData2.ToString("X2")</code>
+            </td>
+            <td>
+                @Frame.numberOfData2
+            </td>
+        </tr>
+       
+    </tbody>
+</table>
+
+@code {
+    [Parameter, EditorRequired]
+    public UdpChannelHeader Header { get; set; }
+
+    [Parameter, EditorRequired]
+	public AvlDataEncapsulated AvlDataEncapsulated { get; set; }
+
+    [Parameter, EditorRequired]
+    public Codec8ExtendedFrameNoCRC Frame { get; set; }
+
+    [Parameter, EditorRequired]
+    public bool DashHexes { get; set; }
+}

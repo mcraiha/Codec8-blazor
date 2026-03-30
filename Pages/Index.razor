@@ -14,13 +14,13 @@
 else
 {
     <p>Mandatory parts</p>
-    @if (frame != null)
+    @if (frameTcp != null)
     {
         <p><a href="@currentInputAsURL" target="_blank">Share (🔗)</a></p>
-        <Codec8Mandatory Frame="@frame" DashHexes="@DashHexes" />
+        <Codec8Mandatory Frame="@frameTcp" DashHexes="@DashHexes" />
         {
             int recordNumber = 1;
-            @foreach (AvlDataCodec8 avlData in frame.GetAvlDatas())
+            @foreach (AvlDataCodec8 avlData in frameTcp.GetAvlDatas())
             {
                 GPSElement gps = avlData.GetGPSElement();
                 IOElementCodec8 ioElement = avlData.GetIOElement();
@@ -30,13 +30,45 @@ else
             }
         }
     }
-    else if (frameExtended != null)
+    else if (frameExtendedTcp != null)
     {
         <p><a href="@currentInputAsURL" target="_blank">Share (🔗)</a></p>
-        <Codec8ExtendedMandatory Frame="@frameExtended" DashHexes="@DashHexes" />
+        <Codec8ExtendedMandatory Frame="@frameExtendedTcp" DashHexes="@DashHexes" />
         {
             int recordNumber = 1;
-            @foreach (AvlDataCodec8Extended avlData in frameExtended.GetAvlDatas())
+            @foreach (AvlDataCodec8Extended avlData in frameExtendedTcp.GetAvlDatas())
+            {
+                GPSElement gps = avlData.GetGPSElement();
+                IOElementCodec8Extended ioElement = avlData.GetIOElement();
+                
+                <Codec8ExtendedAvl AVLData="@avlData" GPS="@gps" IOElement="@ioElement" RecordNumber="@recordNumber" DashHexes="@DashHexes" />
+                recordNumber++;
+            }
+        }
+    }
+    else if (frameUdp != null)
+    {
+        <p><a href="@currentInputAsURL" target="_blank">Share (🔗)</a></p>
+        <Codec8UdpMandatory Header="@header" AvlDataEncapsulated="@avlDataEncapsulated" Frame="@frameUdp" DashHexes="@DashHexes" />
+        {
+            int recordNumber = 1;
+            @foreach (AvlDataCodec8 avlData in frameUdp.GetAvlDatas())
+            {
+                GPSElement gps = avlData.GetGPSElement();
+                IOElementCodec8 ioElement = avlData.GetIOElement();
+                
+                <Codec8Avl AVLData="@avlData" GPS="@gps" IOElement="@ioElement" RecordNumber="@recordNumber" DashHexes="@DashHexes" />
+                recordNumber++;
+            }
+        }
+    }
+    else if (frameExtendedUdp != null)
+    {
+        <p><a href="@currentInputAsURL" target="_blank">Share (🔗)</a></p>
+        <Codec8ExtendedUdpMandatory Header="@header" AvlDataEncapsulated="@avlDataEncapsulated" Frame="@frameExtendedUdp" DashHexes="@DashHexes" />
+        {
+            int recordNumber = 1;
+            @foreach (AvlDataCodec8Extended avlData in frameExtendedUdp.GetAvlDatas())
             {
                 GPSElement gps = avlData.GetGPSElement();
                 IOElementCodec8Extended ioElement = avlData.GetIOElement();
@@ -63,22 +95,62 @@ else
 
                 if (result == GenericDecodeResult.SuccessCodec8)
                 {
-                    frame = (Codec8Frame)valueOrError;
-                    frameExtended = null;
+                    frameTcp = (Codec8Frame)valueOrError;
+                    frameExtendedTcp = null;
+
+                    header = null;
+                    avlDataEncapsulated = null;
+                    frameUdp = null;
+                    frameExtendedUdp = null;
+
                     possibleError = "";
                     currentInputAsURL = $"https://codec8.raiha.rocks/?Input={contentActual}";
                 }
                 else if (result == GenericDecodeResult.SuccessCodec8Extended)
                 {
-                    frame = null;
-                    frameExtended = (Codec8ExtendedFrame)valueOrError;
+                    frameTcp = null;
+                    frameExtendedTcp = (Codec8ExtendedFrame)valueOrError;
+
+                    header = null;
+                    avlDataEncapsulated = null;
+                    frameUdp = null;
+                    frameExtendedUdp = null;
+
+                    possibleError = "";
+                    currentInputAsURL = $"https://codec8.raiha.rocks/?Input={contentActual}";
+                }
+                else if (result == GenericDecodeResult.SuccessCodec8Udp)
+                {
+                    frameTcp = null;
+                    frameExtendedTcp = null;
+
+                    (header, avlDataEncapsulated, frameUdp) = ((UdpChannelHeader a, AvlDataEncapsulated b, Codec8FrameNoCRC c))valueOrError;
+                    frameExtendedUdp = null;
+
+                    possibleError = "";
+                    currentInputAsURL = $"https://codec8.raiha.rocks/?Input={contentActual}";
+                }
+                else if (result == GenericDecodeResult.SuccessCodec8ExtendedUdp)
+                {
+                    frameTcp = null;
+                    frameExtendedTcp = null;
+
+                    (header, avlDataEncapsulated, frameExtendedUdp) = ((UdpChannelHeader a, AvlDataEncapsulated b, Codec8ExtendedFrameNoCRC c))valueOrError;
+                    frameUdp = null;
+
                     possibleError = "";
                     currentInputAsURL = $"https://codec8.raiha.rocks/?Input={contentActual}";
                 }
                 else
                 {
-                    frame = null;
-                    frameExtended = null;
+                    frameTcp = null;
+                    frameExtendedTcp = null;
+
+                    header = null;
+                    avlDataEncapsulated = null;
+                    frameUdp = null;
+                    frameExtendedUdp = null;
+
                     possibleError = (string)valueOrError;
                     currentInputAsURL = "";
                 }
@@ -90,8 +162,16 @@ else
 
     private bool somethingDecoded = false;
     private GenericDecodeResult result = GenericDecodeResult.InputNullOrEmpty;
-    private Codec8Frame? frame = null;
-    private Codec8ExtendedFrame? frameExtended = null;
+
+    private Codec8Frame? frameTcp = null;
+    private Codec8ExtendedFrame? frameExtendedTcp = null;
+
+    private UdpChannelHeader? header = null;
+    private AvlDataEncapsulated? avlDataEncapsulated = null;
+
+    private Codec8FrameNoCRC? frameUdp = null;
+    private Codec8ExtendedFrameNoCRC? frameExtendedUdp = null;
+
     private string possibleError = "";
     private string currentInputAsURL = "";
 

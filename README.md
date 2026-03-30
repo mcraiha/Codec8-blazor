@@ -34,7 +34,7 @@ Run
 dotnet publish -c Release
 ```
   
-and content should be in **bin\Release\net9.0\publish\wwwroot** folder.
+and content should be in **bin\Release\net10.0\publish\wwwroot** folder.
 
 ## Licenses
 
